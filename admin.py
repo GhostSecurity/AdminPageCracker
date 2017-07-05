@@ -367,6 +367,8 @@ def ScanToFind(source,url):
         print(Fore.GREEN+"[#] Total Admin Pages: " + pg1)
         raw_input(Fore.YELLOW+"[#] Press Enter to Exit.")
         exit(0)
+
+os.popen("clear").read()
 Welcome()
 check_for_update()
 try:
