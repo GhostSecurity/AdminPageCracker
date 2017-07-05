@@ -189,7 +189,6 @@ def check_for_update():
         http = urllib2.urlopen('https://raw.githubusercontent.com/HydraBoy/AdminPageCracker/master/version.txt',data=None)
         content = http.read()
         read = open('version.txt','r').read()
-        print read,content
         if read == content:
             print '[#] No updates available.'
         else:
