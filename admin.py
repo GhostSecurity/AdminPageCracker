@@ -7,7 +7,7 @@ import time
 import sys
 from colorama import Fore, Back, Style
 colorama.init()
-ADMIN_FINDER_VERSION = '1.1'
+ADMIN_FINDER_VERSION = '1.0'
 gen_headers = {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201',
 		   	  'Accept-Language':'en-US;',
 		   	  'Accept-Encoding': 'gzip, deflate',
