@@ -4,6 +4,7 @@ import os
 import httplib
 import colorama
 import time
+import urllib2
 import sys
 from termcolor import colored
 from colorama import Fore, Back, Style
@@ -185,9 +186,10 @@ def check_for_update():
     print "\n[*] Checking for [ADMIN FINDER] updates.."
     time.sleep(1)
     try:
-        http = requests.post('https://raw.githubusercontent.com/HydraBoy/AdminPageCracker/master/version.txt',data=None)
-        content = http.content.decode('utf-8')
-        read = open('version.txt')
+        http = urllib2.urlopen('https://raw.githubusercontent.com/HydraBoy/AdminPageCracker/master/version.txt',data=None)
+        content = http.read()
+        read = open('version.txt','r').readlines()
+        print content
         if read == content:
             print '[#] No updates available.'
         else:
@@ -198,7 +200,6 @@ def check_for_update():
 
 
     except Exception as ex:
-        print ex
         print "\n[!] Problem while updating."
     if updated:
         sys.exit(0)
