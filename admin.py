@@ -5,6 +5,7 @@ import httplib
 import colorama
 import time
 import sys
+from termcolor import colored
 from colorama import Fore, Back, Style
 colorama.init()
 ADMIN_FINDER_VERSION = '1.1'
@@ -178,29 +179,24 @@ def Find(resp, toFind):
 	return indexes
 
 def check_for_update():
-    admin_github_url = "https://raw.githubusercontent.com/HydraBoy/AdminPageCracker/master/admin.py"
+    admin_github_url = "https://github.com/HydraBoy/AdminPageCracker"
     keyword = "ADMIN_FINDER_VERSION = '"
     updated = False
     print "\n[*] Checking for [ADMIN FINDER] updates.."
     time.sleep(1)
     try:
-        admin_content = requests.get(admin_github_url,headers=gen_headers).text
-        currversion_index = Find(admin_content,keyword)[0]
-        admin_content = admin_content[(currversion_index+len(keyword)):]
-        currversion = ""
-        for c in admin_content:
-            if c == '\'':
-                break
-            currversion = "%s%s" %(currversion,c)
-            fcurrversion = float(currversion)
-            if(fcurrversion > float(ADMIN_FINDER_VERSION)):
-                updated = True
-                print "[+] New [ADMIN CRACKER] version found. Updating...."
-                download(admin_github_url,sys.argv[0])
-                print colored("\n[+] Admin Finder updated to version %s" %currversion,"red")
-                os.system("%s %s" %(sys.executable,sys.argv[0]))
-            else:
-                print "[#] No updates available.\n"
+        http = requests.post('https://raw.githubusercontent.com/HydraBoy/AdminPageCracker/master/version.txt',data=None)
+        content = http.content.decode('utf-8')
+        read = open('version.txt')
+        if read == content:
+            print '[#] No updates available.'
+        else:
+            print '[+] Updating AdminPage Tool...'
+            os.popen("git pull "+ admin_github_url)
+            print '[+] AdminPage Tool Updated To Version: ' + content
+            updated = True
+
+
     except Exception as ex:
         print ex
         print "\n[!] Problem while updating."
@@ -416,6 +412,9 @@ OK, Now Enter Site Source Code.
             url = raw_input(Fore.GREEN+"[+] Enter Site Target\n>>> ")
             word = raw_input(Fore.GREEN+"[+] Enter Password List Directory\n>>> ")
             FindPassword(word, url)
+        elif ask == '3':
+            print "\nBye ;)\n"
+            exit(0)
 except (KeyboardInterrupt, SystemExit):
     print "\nBye ;)\n"
     exit(0)
