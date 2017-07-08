@@ -144,7 +144,7 @@ def check():
 		open('.version.txt')
 		
 	except:
-		scan = urllib2.urlopen('https://raw.githubusercontent.com/HydraBoy/AdminPageCracker/master/version.txt',data=None)
+		scan = urllib2.urlopen('https://raw.githubusercontent.com/HydraBoy/AdminPageCracker/master/.version.txt',data=None)
 		content = scan.read()
 		os.popen('touch .version.txt;rm -rf version.txt')
 		with open('.version.txt','w') as f:
