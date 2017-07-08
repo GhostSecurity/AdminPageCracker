@@ -388,6 +388,7 @@ def ScanToFind(source,url):
         raw_input(Fore.YELLOW+"[#] Press Enter to Exit.")
         exit(0)
 
+check()
 os.popen("clear").read()
 Welcome()
 check_for_update()
