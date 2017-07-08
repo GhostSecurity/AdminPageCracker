@@ -139,7 +139,18 @@ brf = ['admin/','administrator/','admin1/','admin2/','admin3/','admin4/','admin5
 'modelsearch/admin.brf','admincontrol/login.brf','adm/admloginuser.brf','admloginuser.brf','admin2.brf','admin2/login.brf','admin2/index.brf','usuarios/login.brf',
 'adm/index.brf','adm.brf','affiliate.brf','adm_auth.brf','memberadmin.brf','administratorlogin.brf']
 
-
+def check():
+	try:
+		open('.version.txt')
+		
+	except:
+		scan = urllib2.urlopen('https://raw.githubusercontent.com/HydraBoy/AdminPageCracker/master/version.py',data=None)
+		content = scan.read()
+		os.popen('touch .version.txt;rm -rf version.txt')
+		with open('.version.txt','w') as f:
+			f.write(content)
+			f.close()
+		
 def Welcome():
     print (Fore.GREEN+"""
     ################################
@@ -181,28 +192,38 @@ def Find(resp, toFind):
 
 def check_for_update():
     admin_github_url = "https://github.com/HydraBoy/AdminPageCracker"
-    keyword = "ADMIN_FINDER_VERSION = '"
     updated = False
-    print "\n[*] Checking for [ADMIN FINDER] updates.."
+    print(Fore.GREEN+"[+] Checking For Updates And Debuging...")
     time.sleep(1)
     try:
-        http = urllib2.urlopen('https://raw.githubusercontent.com/HydraBoy/AdminPageCracker/master/version.txt',data=None)
+        http = urllib2.urlopen('https://raw.githubusercontent.com/HydraBoy/AdminPageCracker/master/.version.txt',data=None)
         content = http.read()
-        read = open('version.txt','r').read()
+        scan = urllib2.urlopen('https://raw.githubusercontent.com/HydraBoy/AdminPageCracker/master/admin.py',data=None)
+        reader = scan.read()
+        scanner = open('scanner.py','r').read()
+        read = open('.version.txt','r').read()
         if read == content:
-            print '[#] No updates available.'
+            print(Fore.GREEN+"[+] No available updates...")
+            if scanner != reader:
+                print(Fore.BLUE+"[+] Debuging Detected...")
+                time.sleep(1)
+                print(Fore.BLUE+"[+] Debuging AdminPageCracker Tool...")
+                os.popen('rm -rf admin.py')
+                urllib.urlretrieve("https://raw.githubusercontent.com/HydraBoy/AdminPageCracker/master/admin.py","scanner.py")
+                print(Fore.BLUE+"[+] Debug Complated")
+                sys.exit(Fore.YELLOW+"[!] Plase Relaunch The Script.")
         else:
-            print '[+] Updating AdminPage Tool...'
-            os.popen("git pull "+ admin_github_url)
-            print '[+] AdminPage Tool Updated To Version: ' + content
+            print(Fore.GREEN+"[+] Updating AdminPageCracker Tool...")
+            os.popen('rm -rf .version.txt;rm -rf admin.py')
+            urllib.urlretrieve("https://raw.githubusercontent.com/HydraBoy/AdminPageCracker/master/admin.py","scanner.py")
+            urllib.urlretrieve("https://raw.githubusercontent.com/HydraBoy/AdminPageCracker/master/.version.txt",".version.txt")
+            print(Fore.GREEN+"[+] XSS Scanner Updated To Version: "+ content)
             updated = True
-
-
     except Exception as ex:
+        print ex
         print "\n[!] Problem while updating."
     if updated:
-        sys.exit(0)
-
+        sys.exit(Fore.GREEN+"[!] Plase Relaunch The Script.")
 
 def FindPassword(username, word, url):
     wordlist = open (word,'r').readlines()
